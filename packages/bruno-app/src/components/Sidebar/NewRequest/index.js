@@ -19,10 +19,14 @@ import PathDisplay from 'components/PathDisplay';
 import Portal from 'components/Portal';
 import Help from 'components/Help';
 import StyledWrapper from './StyledWrapper';
+import SingleLineEditor from 'components/SingleLineEditor/index';
+import { useTheme } from 'styled-components';
 
 const NewRequest = ({ collectionUid, item, isEphemeral, onClose }) => {
   const dispatch = useDispatch();
   const inputRef = useRef();
+
+  const storedTheme = useTheme();
 
   const collection = useSelector(state => state.collections.collections?.find(c => c.uid === collectionUid));
   const {
@@ -414,7 +418,21 @@ const NewRequest = ({ collectionUid, item, isEphemeral, onClose }) => {
                       />
                     </div>
                     <div className="flex items-center flex-grow input-container h-full">
-                      <input
+                      <SingleLineEditor
+                        value={formik.values.requestUrl || ''}
+                        theme={storedTheme}
+                        onChange={(value) => {
+                          formik.handleChange({
+                            target: {
+                              name: "requestUrl",
+                              value: value
+                            }
+                          });
+                        }}
+                        collection={collection}
+                        variablesAutocomplete={true}
+                      />
+                      {/* <input
                         id="request-url"
                         type="text"
                         name="requestUrl"
@@ -427,7 +445,7 @@ const NewRequest = ({ collectionUid, item, isEphemeral, onClose }) => {
                         onChange={formik.handleChange}
                         value={formik.values.requestUrl || ''}
                         onPaste={handlePaste}
-                      />
+                      /> */}
                     </div>
                   </div>
                   {formik.touched.requestUrl && formik.errors.requestUrl ? (
