@@ -238,6 +238,11 @@ const NewRequest = ({ collectionUid, item, isEphemeral, onClose }) => {
     }
   };
 
+  function CrashComponent() {
+    throw new Error("💥 Crash!");
+    return <div>This will never render</div>;
+  }
+
   const AdvancedOptions = forwardRef((props, ref) => {
     return (
       <div ref={ref} className="flex mr-2 text-link cursor-pointer items-center">
@@ -256,6 +261,7 @@ const NewRequest = ({ collectionUid, item, isEphemeral, onClose }) => {
     <Portal>
       <StyledWrapper>
         <Modal size="md" title="New Request" hideFooter handleCancel={onClose}>
+          <CrashComponent/>
           <form
             className="bruno-form"
             onSubmit={formik.handleSubmit}

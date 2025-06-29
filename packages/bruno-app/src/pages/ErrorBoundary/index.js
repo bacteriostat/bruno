@@ -6,7 +6,7 @@ class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { hasError: false };
+    this.state = { hasError: false, isDarkMode: false };
   }
   componentDidMount() {
     // Add a global error event listener to capture client-side errors
@@ -33,9 +33,10 @@ class ErrorBoundary extends React.Component {
 
   render() {
     if (this.state.hasError) {
+      const bgColor = isDarkMode ? 'bg-black' : 'bg-white';
       return (
-        <div className="flex text-center justify-center p-20 h-full">
-          <div className="bg-white rounded-lg p-10 w-full">
+        <div style={{ minHeight: '100vh' }} className="bg-black flex text-center justify-center p-20 h-full">
+          <div className={`bg-black rounded-lg p-10 w-full`}>
             <div className="m-auto" style={{ width: '256px' }}>
               <Bruno width={256} />
             </div>
